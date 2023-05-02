@@ -2,9 +2,10 @@
 ユーザーの歴史をまとめるWebアプリケーション
 
 ## 使用予定技術
-- フロント：Next.js
-- バック：Django
-- データベース：sqlite3
+- フロントエンド：Next.js
+- バックエンド&emsp;：Django
+- データベース&emsp;：sqlite3
+- インフラ&emsp;&emsp;&emsp;：Docker
 
 ### 概要
 - 自分年表
