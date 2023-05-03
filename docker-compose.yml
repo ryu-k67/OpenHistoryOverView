@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  django:
+    container_name: django
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile_back
+    tty: true
+    volumes:
+      - ./backend/source:/django
+    ports:
+     - 8000:8000
+    # image: app:django
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+  db:
+    image: mysql:8
+    container_name: mysql
+    volumes:
+      - ./database/data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'django'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+
