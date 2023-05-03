@@ -18,6 +18,7 @@
 
 
 ### コマンド
+docker-compose build  
 - コンテナ作成・起動  
 docker-compose up -d  
 - コンテナ停止・削除  
@@ -39,4 +40,5 @@ python manage.py runserver 0.0.0.0:8000
 - frontend(Next.js)環境のコンテナへ入る  
 docker-compose exec next /bin/bash  
 - frontend(Next.js)立ち上げ  
+cd app  
 npm run dev

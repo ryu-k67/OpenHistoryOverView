@@ -12,7 +12,7 @@ services:
     tty: true
     volumes:
       - ./frontend/src:/next
-      # - node_modules_volume:/next/node_modules
+      - node_modules_volume:/next/app/node_modules
     ports:
       - "3000:3000"
     # command: sh -c "npm run dev"
