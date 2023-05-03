@@ -1,6 +1,23 @@
 version: '3.8'
 
+volumes:
+  node_modules_volume:
+
 services:
+  next:
+    container_name: next
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile_front
+    tty: true
+    volumes:
+      - ./frontend/src:/next
+      - node_modules_volume:/next/app/node_modules
+    ports:
+      - "3000:3000"
+    # command: sh -c "npm run dev"
+    # command: sh -c "yarn dev"
+
   django:
     container_name: django
     build: 
@@ -8,13 +25,14 @@ services:
       dockerfile: Dockerfile_back
     tty: true
     volumes:
-      - ./backend/source:/django
+      - ./backend/src:/django
     ports:
      - 8000:8000
     # image: app:django
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
+
   db:
     image: mysql:8
     container_name: mysql
