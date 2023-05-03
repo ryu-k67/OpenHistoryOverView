@@ -15,3 +15,12 @@
 ・  
 ・  
 などの機能を含む自己分析ツールを目指す
+
+
+### コマンド
+- backend(Django)環境のコンテナへ入る
+docker-compose up -d  
+docker-compose exec django /bin/bash  
+  
+- backend(Django)立ち上げ  
+python manage.py runserver 0.0.0.0:8000
