@@ -1,0 +1,7 @@
+FROM node:18.16
+WORKDIR /next
+
+COPY ./src/app/package.json ./
+RUN npm install
+
+USER node
