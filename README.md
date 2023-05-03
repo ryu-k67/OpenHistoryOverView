@@ -4,7 +4,7 @@
 ## 使用予定技術
 - フロントエンド：Next.js
 - バックエンド&emsp;：Django
-- データベース&emsp;：sqlite3
+- データベース&emsp;：MySQL
 - インフラ&emsp;&emsp;&emsp;：Docker
 
 ### 概要
