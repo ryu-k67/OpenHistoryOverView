@@ -18,7 +18,7 @@
 
 
 ### コマンド
-(Dockerfileファイル更新の反映に必要)
+- (Dockerfileファイル更新の反映に必要)  
 docker-compose build  
 - コンテナ作成・起動 (docker-compose.ymlファイル更新の反映に必要)  
 docker-compose up -d  
