@@ -40,5 +40,20 @@ python manage.py runserver 0.0.0.0:8000
 - frontend(Next.js)環境のコンテナへ入る  
 docker-compose exec next /bin/bash  
 - frontend(Next.js)立ち上げ  
-cd app  
 npm run dev
+<br>
+
+- database(MySQL)環境のコンテナへ入る  
+docker exec -it mysql bash  
+- MySQLへの接続  
+mysql  
+- データベースの確認  
+show databases;  
+- backend(Django)の中身確認  
+use django;  
+- MySQLとの接続を終了する  
+quit
+<br>
+
+- コンテナから抜ける  
+exit  
