@@ -1,7 +1,11 @@
 FROM node:18.16
-WORKDIR /next/app/
+WORKDIR /next/
 
-COPY ./src/app/package.json ./
-RUN npm install
+COPY ./src/package.json ./
+RUN npm install && \
+    npm install cookie date-fns micro micro-cors && \
+    npm install react-redux redux redux-devtools-extension redux-thunk stripe
 
-USER node
+WORKDIR /next/src/
+
+# USER node
