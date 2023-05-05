@@ -11,8 +11,8 @@ services:
       dockerfile: Dockerfile_front
     tty: true
     volumes:
-      - ./frontend/src:/next
-      - node_modules_volume:/next/app/node_modules
+      - ./frontend:/next
+      - node_modules_volume:/next/src/node_modules
     ports:
       - "3000:3000"
     command: npm run dev

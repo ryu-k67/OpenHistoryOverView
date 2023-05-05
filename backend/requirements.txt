@@ -1,2 +1,6 @@
 Django
 mysqlclient
+djangorestframework
+djangorestframework-simplejwt
+PyJWT
+python-dateutil
