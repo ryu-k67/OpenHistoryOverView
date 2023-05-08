@@ -1,7 +1,21 @@
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import {refresh} from '@/actions/auth'
 import Head from 'next/head'
 import Navigation from './Navigation'
 
 function Layout(props){
+    const dispatch=useDispatch()
+
+    useEffect(()=>{
+        const fn=async ()=>{
+            if(dispatch && dispatch!==null && dispatch!==undefined){
+                await dispatch(refresh)
+            }
+        }
+        fn()
+    },[dispatch])
+    
     return (
         <>
             <Head>
