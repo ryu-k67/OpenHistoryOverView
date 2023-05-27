@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import AuthContext, {AUthProvider} from '@/context/AuthContext'
+import { useContext } from 'react'
 
 function Navigation(){
+    let {user}=useContext(AuthContext)
     return(
         <>
             <div className='bg-gray-900'>
@@ -11,6 +14,7 @@ function Navigation(){
                                 チャレンジ
                             </Link>
                         </div>
+                        {user && <p className='text-white'>Hello {user.name}</p>}
                         <div>
                             <div>
                                 <Link href='/login' className='button-nav mr-4'>
@@ -18,11 +22,14 @@ function Navigation(){
                                 </Link>
                                 <Link href='/register' className='button-nav'>
                                     アカウント登録
-                                </Link>
+                                </Link>                                
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                {/* <p>Hello {name}</p> */}
             </div>
         </>
     )
