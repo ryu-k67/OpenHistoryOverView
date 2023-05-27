@@ -3,4 +3,7 @@ mysqlclient
 djangorestframework
 djangorestframework-simplejwt
 PyJWT
-python-dateutil
+# python-dateutil
+djoser
+django-cors-headers
+# Pillow
