@@ -4,7 +4,8 @@ WORKDIR /next/
 COPY ./src/package.json ./
 RUN npm install && \
     npm install cookie date-fns micro micro-cors && \
-    npm install react-redux redux redux-devtools-extension redux-thunk stripe
+    npm install react-redux redux redux-devtools-extension redux-thunk stripe && \
+    npm install react-router-dom
 
 WORKDIR /next/src/
 

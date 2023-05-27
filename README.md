@@ -58,3 +58,9 @@ quit
 
 - コンテナから抜ける  
 exit  
+<br>  
+
+- コンテナIDを調べる  
+docker ps  
+- コンテナに割り当てられたIPアドレスを確認する(Windows)  
+docker inspect コンテナID | findstr  IPAddress  
