@@ -3,7 +3,7 @@ import AuthContext, {AUthProvider} from '@/context/AuthContext'
 import { useContext } from 'react'
 
 function Navigation(){
-    let {user}=useContext(AuthContext)
+    let {user,logoutUser}=useContext(AuthContext)
     return(
         <>
             <div className='bg-gray-900'>
@@ -17,9 +17,12 @@ function Navigation(){
                         {user && <p className='text-white'>Hello {user.name}</p>}
                         <div>
                             <div>
-                                <Link href='/login' className='button-nav mr-4'>
+                                {!user && <Link href='/login' className='button-nav mr-4'>
                                     ログイン
-                                </Link>
+                                </Link>}
+                                {user && <p onClick={logoutUser} className='button-nav mr-4'>
+                                    ログアウト
+                                </p>}
                                 <Link href='/register' className='button-nav'>
                                     アカウント登録
                                 </Link>                                

@@ -1,5 +1,6 @@
 import React,{ createContext,useState,useEffect } from "react";
 import jwt_decode from 'jwt-decode'
+import {useRouter} from 'next/router'
 
 const AuthContext=React.createContext()
 
@@ -7,9 +8,16 @@ export default AuthContext
 
 
 export const AUthProvider=({children})=>{
+    // useEffect(()=>{
+    //     loginUser
+    // })
+    // localStorage.getItem('')
 
+    // localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')):null
     let [authTokens,setAuthTokens]=useState(null)
     let [user,setUser]=useState(null)
+
+    let router=useRouter()
 
     let loginUser=async(e)=>{
         e.preventDefault()
@@ -30,6 +38,8 @@ export const AUthProvider=({children})=>{
             if(res.status===200){
                 setAuthTokens(data)
                 setUser(jwt_decode(data.access))
+                localStorage.setItem('authTokens',JSON.stringify(data))
+                router.push('/')
             }
             else{
                 console.log('status error')
@@ -44,9 +54,18 @@ export const AUthProvider=({children})=>{
         })
     }
 
+    let logoutUser=()=>{
+        setAuthTokens(null)
+        setUser(null)
+        localStorage.removeItem('authTokens')
+        // router.push('/login')
+        console.log('logout')
+    }
+
     let contextData={
         user:user,
-        loginUser:loginUser
+        loginUser:loginUser,
+        logoutUser:logoutUser
     }
 
     return (
