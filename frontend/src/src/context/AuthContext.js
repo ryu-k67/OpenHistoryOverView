@@ -12,6 +12,7 @@ export const AUthProvider=({children})=>{
     let [authTokens,setAuthTokens]=useState(null)
     let [user,setUser]=useState(null)
     let change=true
+    let [loading,setLoading]=useState(true)
 
     useEffect(()=>{
         setAuthTokens(localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')):null)
@@ -64,6 +65,55 @@ export const AUthProvider=({children})=>{
         router.push('/')
         console.log('logout')
     }
+
+    let updateToken = async()=>{
+        console.log('Update token')
+        let response=await fetch('http://127.20.0.4:8000/api/token/refresh/',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                // 'Access-Control-Allow-Origin': 'http://localhost:3000',
+                // 'Access-Control-Allow-Headers': 'Content-Type'
+                // 'Access-Control-Allow-Headers':'access-control-allow-headers'
+            },
+            body:JSON.stringify({'refresh':authTokens.refresh})
+        })
+        .then(async(res)=>{
+            let data=await res.json()
+            // console.log('data:',data)
+            // console.log(jwt_decode(data.access))
+            if(res.status===200){
+                setAuthTokens(data)
+                setUser(jwt_decode(data.access))
+                localStorage.setItem('authTokens',JSON.stringify(data))
+                // router.push('/')
+                change=false
+            }
+            else{
+                console.log('status error')
+                logoutUser()
+            }
+        })
+        .then(()=>{
+            console.log(authTokens)
+            console.log(user)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    useEffect(()=>{
+
+        let minutes=1000*60*10
+        let interval=setInterval(()=>{
+            if(authTokens){
+                updateToken()
+            }
+        },minutes)
+        return ()=> clearInterval(interval)
+
+    },[authTokens,loading])
 
     let contextData={
         user:user,
