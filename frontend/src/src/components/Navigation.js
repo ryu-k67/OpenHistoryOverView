@@ -11,21 +11,29 @@ function Navigation(){
                     <div className='flex items-center justify-between'>
                         <div>
                             <Link href="/" className='text-white hover:text-gray-50 font-extrabold text-lg'>
-                                チャレンジ
+                                HistoryOverView
                             </Link>
                         </div>
                         {user && <p className='text-white'>Hello {user.name}</p>}
                         <div>
                             <div>
-                                {!user && <Link href='/login' className='button-nav mr-4'>
-                                    ログイン
-                                </Link>}
-                                {user && <p onClick={logoutUser} className='button-nav mr-4'>
-                                    ログアウト
-                                </p>}
-                                <Link href='/register' className='button-nav'>
+                                {!user && 
+                                    <Link href='/login' className='button-nav mr-4'>
+                                        ログイン
+                                    </Link>
+                                }
+                                {!user && 
+                                    <Link href='/register' className='button-nav'>
                                     アカウント登録
-                                </Link>                                
+                                    </Link>
+                                }
+                                
+                                {user && 
+                                    <p onClick={logoutUser} className='button-nav mr-4'>
+                                        ログアウト
+                                    </p>
+                                }
+                                                                
                             </div>
                         </div>
                     </div>

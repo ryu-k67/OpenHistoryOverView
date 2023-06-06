@@ -123,7 +123,7 @@ function Index(){
   return(
     <>
       <div className="text-center text-2xl">
-        ログイン機能実装
+        ここがホーム
       </div>
     </>
   )

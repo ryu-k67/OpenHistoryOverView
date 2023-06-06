@@ -8,14 +8,16 @@ export default AuthContext
 
 
 export const AUthProvider=({children})=>{
-    // useEffect(()=>{
-    //     loginUser
-    // })
-    // localStorage.getItem('')
-
-    // localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')):null
+    
     let [authTokens,setAuthTokens]=useState(null)
     let [user,setUser]=useState(null)
+    let change=true
+
+    useEffect(()=>{
+        setAuthTokens(localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')):null)
+        setUser(localStorage.getItem('authTokens')?jwt_decode(localStorage.getItem('authTokens')):null)
+    },[change])
+
 
     let router=useRouter()
 
@@ -40,6 +42,7 @@ export const AUthProvider=({children})=>{
                 setUser(jwt_decode(data.access))
                 localStorage.setItem('authTokens',JSON.stringify(data))
                 router.push('/')
+                change=false
             }
             else{
                 console.log('status error')
@@ -58,7 +61,7 @@ export const AUthProvider=({children})=>{
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem('authTokens')
-        // router.push('/login')
+        router.push('/')
         console.log('logout')
     }
 
