@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import AuthContext, {AUthProvider} from '@/context/AuthContext'
+import AuthContext from '@/context/AuthContext'
 import { useContext } from 'react'
 
 function Navigation(){
@@ -24,10 +24,15 @@ function Navigation(){
                                 }
                                 {!user && 
                                     <Link href='/register' className='button-nav'>
-                                    アカウント登録
+                                        アカウント登録
                                     </Link>
                                 }
                                 
+                                {user && 
+                                    <Link href='/notelist' className='button-nav mr-4'>
+                                        一覧
+                                        </Link>
+                                }
                                 {user && 
                                     <p onClick={logoutUser} className='button-nav mr-4'>
                                         ログアウト

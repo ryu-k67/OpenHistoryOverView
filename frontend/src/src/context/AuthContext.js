@@ -7,20 +7,27 @@ const AuthContext=React.createContext()
 export default AuthContext
 
 
-export const AUthProvider=({children})=>{
+export const AuthProvider=({children})=>{
     
     let [authTokens,setAuthTokens]=useState(null)
     let [user,setUser]=useState(null)
-    let change=true
+    // let change=true
     let [loading,setLoading]=useState(true)
+    let curr_path='/'
+
+    let router=useRouter()
+
 
     useEffect(()=>{
         setAuthTokens(localStorage.getItem('authTokens')?JSON.parse(localStorage.getItem('authTokens')):null)
         setUser(localStorage.getItem('authTokens')?jwt_decode(localStorage.getItem('authTokens')):null)
-    },[change])
+    },[loading])
+
+    // useEffect(()=>{
+    //     router.push(curr_path)
+    // },[curr_path])
 
 
-    let router=useRouter()
 
     let loginUser=async(e)=>{
         e.preventDefault()
@@ -43,7 +50,7 @@ export const AUthProvider=({children})=>{
                 setUser(jwt_decode(data.access))
                 localStorage.setItem('authTokens',JSON.stringify(data))
                 router.push('/')
-                change=false
+                // change=false
             }
             else{
                 console.log('status error')
@@ -76,7 +83,7 @@ export const AUthProvider=({children})=>{
                 // 'Access-Control-Allow-Headers': 'Content-Type'
                 // 'Access-Control-Allow-Headers':'access-control-allow-headers'
             },
-            body:JSON.stringify({'refresh':authTokens.refresh})
+            body:JSON.stringify({'refresh':authTokens?.refresh})
         })
         .then(async(res)=>{
             let data=await res.json()
@@ -86,13 +93,19 @@ export const AUthProvider=({children})=>{
                 setAuthTokens(data)
                 setUser(jwt_decode(data.access))
                 localStorage.setItem('authTokens',JSON.stringify(data))
-                // router.push('/')
-                change=false
+                // console.log(router.pathname)
+                // localStorage.setItem('curr_path',router.pathname)
+                // router.replace('/notelist')
+                // change=false
             }
             else{
                 console.log('status error')
                 logoutUser()
             }
+
+            // if(loading){
+            //     setLoading(false)
+            // }
         })
         .then(()=>{
             console.log(authTokens)
@@ -105,7 +118,11 @@ export const AUthProvider=({children})=>{
 
     useEffect(()=>{
 
-        let minutes=1000*60*10
+        // if(loading){
+        //     updateToken()
+        // }
+
+        let minutes=1000*60*4
         let interval=setInterval(()=>{
             if(authTokens){
                 updateToken()
@@ -117,12 +134,14 @@ export const AUthProvider=({children})=>{
 
     let contextData={
         user:user,
+        authTokens:authTokens,
         loginUser:loginUser,
         logoutUser:logoutUser
     }
 
     return (
         <AuthContext.Provider value={contextData} >
+            {/* {loading ? null:children} */}
             {children}
         </AuthContext.Provider>
     )
