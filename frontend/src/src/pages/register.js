@@ -79,12 +79,43 @@
 
 
 
-import React from 'react'
+import AuthContext from '@/context/AuthContext'
+import React, { useContext } from 'react'
 
 const Register=()=>{
+    let {RegistUser}=useContext(AuthContext)
     return (
         <div>
-            <p>Register page!</p>
+            <div className='text-center text-2xl mb-5'>ユーザー登録</div>
+            <form className='w-1/3 mx-auto' onSubmit={RegistUser}>
+                <div className='mb-4'>
+                    <div className='mb-1' htmlFor='name'>
+                        ユーザー名
+                    </div>
+                    <input className='input-form' type='text' name='name' placeholder='abc' required></input>
+                </div>
+                <div className='mb-4'>
+                    <div className='mb-1' htmlFor='email'>
+                        メアド
+                    </div>
+                    <input className='input-form' type='email' name='email' placeholder='xxx@xxx.com' required></input>
+                </div>
+                <div className='mb-4'>
+                    <div className='mb-1' htmlFor='password'>
+                        パスワード
+                    </div>
+                    <input className='input-form' type='password' name='password' placeholder='半角英数8文字以上' required></input>
+                </div>
+                <div className='flex justify-center'>
+                    {/* {loading ? (
+                        <Loader type='Oval' color='#F59E00' width={50} height={50}></Loader>
+                    ):( */}
+                        <button className='button-yellow' type='submit'>
+                            登録
+                        </button>
+                    {/* )} */}
+                </div>
+            </form>
         </div>
     )
 }

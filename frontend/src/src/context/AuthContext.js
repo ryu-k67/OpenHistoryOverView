@@ -27,6 +27,42 @@ export const AuthProvider=({children})=>{
     //     router.push(curr_path)
     // },[curr_path])
 
+    let RegistUser=async(e)=>{
+        e.preventDefault()
+        console.log('From submitted')
+        let body=JSON.stringify({'name':e.target.name.value,'email':e.target.email.value,'password':e.target.password.value})
+        console.log(body)
+        let response=await fetch('http://127.20.0.4:8000/api/register/',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:body
+        })
+        .then(async(res)=>{
+            // let data=await res.json()
+            // console.log('data:',data)
+            // console.log(jwt_decode(data.access))
+            if(res.status===201){
+                console.log('register success,user created')
+                // setAuthTokens(data)
+                // setUser(jwt_decode(data.access))
+                // localStorage.setItem('authTokens',JSON.stringify(data))
+                loginUser(e)
+                // change=false
+            }
+            else{
+                console.log('ユーザー登録に失敗')
+            }
+        })
+        .then(()=>{
+            console.log(authTokens)
+            console.log(user)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
 
 
     let loginUser=async(e)=>{
@@ -75,7 +111,7 @@ export const AuthProvider=({children})=>{
 
     let updateToken = async()=>{
         console.log('Update token')
-        let response=await fetch('http://127.20.0.4:8000/api/token/refresh/',{
+        let response=await fetch('http://172.20.0.4:8000/api/token/refresh/',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -135,8 +171,9 @@ export const AuthProvider=({children})=>{
     let contextData={
         user:user,
         authTokens:authTokens,
+        RegistUser:RegistUser,
         loginUser:loginUser,
-        logoutUser:logoutUser
+        logoutUser:logoutUser,
     }
 
     return (

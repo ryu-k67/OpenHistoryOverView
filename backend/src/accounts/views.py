@@ -79,6 +79,12 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from django.contrib.auth import get_user_model
+from rest_framework import permissions, status
+from rest_framework.views import APIView
+
+User=get_user_model()
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls,user):
@@ -98,3 +104,33 @@ def getRoutes(request):
     ]
 
     return Response(routes)
+
+
+class RegisterView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        try:
+            data = request.data
+            name = data['name']
+            email = data['email'].lower()
+            password = data['password']
+
+            if not User.objects.filter(email=email).exists():
+                User.objects.create_user(name=name, email=email, password=password)
+
+                return Response(
+                    {'success': 'ユーザー登録成功'},
+                    status=status.HTTP_201_CREATED
+                )
+            else:
+                return Response(
+                    {'error': '既に登録されているメールアドレス'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+        except:
+            return Response(
+                {'error': 'ユーザー登録時に問題発生'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
