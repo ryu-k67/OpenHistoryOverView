@@ -32,7 +32,8 @@ export const AuthProvider=({children})=>{
         console.log('From submitted')
         let body=JSON.stringify({'name':e.target.name.value,'email':e.target.email.value,'password':e.target.password.value})
         console.log(body)
-        let response=await fetch('http://127.20.0.4:8000/api/register/',{
+        // let response=await fetch('http://127.20.0.4:8000/api/register/',{
+        let response=await fetch('http://django:8000/api/register/',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -68,7 +69,8 @@ export const AuthProvider=({children})=>{
     let loginUser=async(e)=>{
         e.preventDefault()
         console.log('From submitted')
-        let response=await fetch('http://127.20.0.4:8000/api/token/',{
+        // let response=await fetch('http://127.20.0.4:8000/api/token/',{
+        let response=await fetch('http://django:8000/api/token/',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -111,7 +113,7 @@ export const AuthProvider=({children})=>{
 
     let updateToken = async()=>{
         console.log('Update token')
-        let response=await fetch('http://172.20.0.4:8000/api/token/refresh/',{
+        let response=await fetch('http://django:8000/api/token/refresh/',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',

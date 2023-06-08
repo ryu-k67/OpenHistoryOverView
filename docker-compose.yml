@@ -3,6 +3,9 @@ version: '3.8'
 volumes:
   node_modules_volume:
 
+networks:
+  docker-network:
+  
 services:
   next:
     container_name: next
@@ -19,6 +22,8 @@ services:
     # command: sh -c "yarn dev"
     environment:
      - WATCHPACK_POLLING=true
+    networks:
+      - docker-network
 
   django:
     container_name: django
@@ -34,6 +39,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
+    networks:
+      - docker-network
 
   db:
     image: mysql:8
@@ -45,4 +52,6 @@ services:
     environment:
       MYSQL_DATABASE: 'django'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    networks:
+      - docker-network
 
