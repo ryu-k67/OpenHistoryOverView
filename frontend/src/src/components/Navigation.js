@@ -31,7 +31,12 @@ function Navigation(){
                                 {user && 
                                     <Link href='/notelist' className='button-nav mr-4'>
                                         一覧
-                                        </Link>
+                                    </Link>
+                                }
+                                {user && 
+                                    <Link href='/makegraph' className='button-nav mr-4'>
+                                        グラフ編集
+                                    </Link>
                                 }
                                 {user && 
                                     <p onClick={logoutUser} className='button-nav mr-4'>
