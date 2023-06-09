@@ -14,7 +14,7 @@ const NoteList=()=>{
 
     let getNotes=async()=>{
         // console.log(authTokens.access)
-        let response=await fetch('http://127.20.0.4:8000/app/notes/',{
+        let response=await fetch('http://localhost:8000/app/notes/',{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
