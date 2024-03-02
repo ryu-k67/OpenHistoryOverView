@@ -19,48 +19,53 @@
 
 ### コマンド
 - (Dockerfileファイル更新の反映に必要)  
-docker-compose build  
+```docker-compose build```
 - コンテナ作成・起動 (docker-compose.ymlファイル更新の反映に必要)  
-docker-compose up -d  
+```docker-compose up -d```  
 - コンテナ停止・削除  
-docker-compose down  
+```docker-compose down```  
 - コンテナ起動のみ  
-docker-compose start  
+```docker-compose start```  
 - コンテナ停止のみ  
-docker-compose stop  
+```docker-compose stop```  
 - コンテナの状態確認  
-docker-compose ps  
-<br>
-
-- backend(Django)環境のコンテナへ入る  
-docker-compose exec django /bin/bash  
-- backend(Django)立ち上げ  
-python manage.py runserver 0.0.0.0:8000  
+```docker-compose ps```  
 <br>
 
 - frontend(Next.js)環境のコンテナへ入る  
-docker-compose exec next /bin/bash  
+```docker-compose exec next /bin/bash```  
 - frontend(Next.js)立ち上げ  
-npm run dev
+```npm run dev```
 <br>
 
+- backend(Django)環境のコンテナへ入る  
+```docker-compose exec django /bin/bash```  
+- backend(Django)立ち上げ  
+```python manage.py runserver 0.0.0.0:8000```  
+<br>
+
+- databaseにモデル(table)の作成を反映
+```python manage.py makemigrations```  
+- databaseにモデル(table)の変更を反映
+```python manage.py migrate```
+
 - database(MySQL)環境のコンテナへ入る  
-docker exec -it mysql bash  
+```docker exec -it mysql bash```  
 - MySQLへの接続  
-mysql  
+```mysql```  
 - データベースの確認  
-show databases;  
+```show databases;```  
 - backend(Django)の中身確認  
-use django;  
+```use django;```  
 - MySQLとの接続を終了する  
-quit
+```quit```
 <br>
 
 - コンテナから抜ける  
-exit  
+```exit```  
 <br>  
 
 - コンテナIDを調べる  
-docker ps  
+```docker ps```  
 - コンテナに割り当てられたIPアドレスを確認する(Windows)  
-docker inspect コンテナID | findstr  IPAddress  
+```docker inspect コンテナID | findstr  IPAddress```  
