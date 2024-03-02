@@ -44,9 +44,9 @@
 ```python manage.py runserver 0.0.0.0:8000```  
 <br>
 
-- databaseにモデル(table)の作成を反映
+- databaseにモデル(table)の作成を反映  
 ```python manage.py makemigrations```  
-- databaseにモデル(table)の変更を反映
+- databaseにモデル(table)の変更を反映  
 ```python manage.py migrate```
 
 - database(MySQL)環境のコンテナへ入る  
