@@ -17,6 +17,7 @@ function Navigation(){
                         {user && <p className='text-white'>Hello {user.name}</p>}
                         <div>
                             <div>
+                                {/* ログイン前 */}
                                 {!user && 
                                     <Link href='/login' className='button-nav mr-4'>
                                         ログイン
@@ -28,6 +29,7 @@ function Navigation(){
                                     </Link>
                                 }
                                 
+                                {/* ログイン後 */}
                                 {user && 
                                     <Link href='/notelist' className='button-nav mr-4'>
                                         一覧
