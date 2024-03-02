@@ -103,10 +103,10 @@ const MakeGraph=()=> {
     const [graphInit, setGraphInit] = useState(false);
     const {user}=useContext(AuthContext);
     console.log(user)
-    console.log(user.user_id)
-    let userId=user.user_id
+    // console.log(user.user_id)
+    let userId=null
     // const userId=1
-    console.log(userId)
+    // console.log(userId)
 
     let options = {
         type: 'line',
@@ -281,44 +281,47 @@ const MakeGraph=()=> {
     };
 
     useEffect(() => {
-        const fetchGraphPoints = async () => {
-          try {
-            const response = await fetch(`http://localhost:8000/app/graph/get/${userId}`);
-            if (!response.ok) {
-              throw new Error('グラフポイントの取得に失敗しました');
-            }
-            let data = await response.json();
-            data = data[0]
-            let datas=[]
-            // console.log(response)
-            console.log(data)
-            if (data == undefined) {
-                datas = initDatas;
-                setGraphInit(true);
-            }
-            else{
-                for (let i=0;i<7;i++){
-                    console.log(data['graph_point_'+i])
-                    if (data['graph_point_'+i] == undefined) {
-                        datas.push(initDatas[i])
-                    }
-                    else{
-                        datas.push(data['graph_point_'+i]/10)
-                    }
-                    console.log('datas:'+datas[i])
+        if (user != undefined) {
+            userId = user.user_id;
+            const fetchGraphPoints = async () => {
+            try {
+                const response = await fetch(`http://localhost:8000/app/graph/get/${userId}`);
+                if (!response.ok) {
+                throw new Error('グラフポイントの取得に失敗しました');
                 }
+                let data = await response.json();
+                data = data[0]
+                let datas=[]
+                // console.log(response)
+                console.log(data)
+                if (data == undefined) {
+                    datas = initDatas;
+                    setGraphInit(true);
+                }
+                else{
+                    for (let i=0;i<7;i++){
+                        console.log(data['graph_point_'+i])
+                        if (data['graph_point_'+i] == undefined) {
+                            datas.push(initDatas[i])
+                        }
+                        else{
+                            datas.push(data['graph_point_'+i]/10)
+                        }
+                        console.log('datas:'+datas[i])
+                    }
+                }
+                console.log('data:'+data)
+                console.log('graph_pioints:'+datas)
+                console.log('init_graph_pioints:'+initDatas)
+                setGraphPoints(datas);
+            } catch (error) {
+                console.error('グラフポイントの取得中にエラーが発生しました:', error);
             }
-            console.log('data:'+data)
-            console.log('graph_pioints:'+datas)
-            console.log('init_graph_pioints:'+initDatas)
-            setGraphPoints(datas);
-          } catch (error) {
-            console.error('グラフポイントの取得中にエラーが発生しました:', error);
-          }
-        };
-    
-        fetchGraphPoints();
-    }, [userId]);
+            };
+        
+            fetchGraphPoints();
+        }
+    }, [user]);
 
 
     return (
