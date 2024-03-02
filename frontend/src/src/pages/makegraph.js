@@ -104,7 +104,7 @@ const MakeGraph=()=> {
     const {user}=useContext(AuthContext);
     console.log(user)
     // console.log(user.user_id)
-    let userId=null
+    let [userId,setUserId]=useState();
     // const userId=1
     // console.log(userId)
 
@@ -191,6 +191,36 @@ const MakeGraph=()=> {
         console.log('imageSave')
         let targetCanvas = document.getElementById('chartJSContainer')
         let link = targetCanvas.toDataURL('image/png')
+        // const img = new Image();
+        // img.src = dataUrl;
+
+        // const formData = new FormData();
+        // formData.append('image', img);  // imageFileはファイルインプットから選択された画像ファイル
+        // formData.append('user_id', userId);  // 他のデータも追加可能
+        // formData.append('graph_point_0', parseInt(graphPoints[0]*10));
+        // formData.append('graph_point_1', parseInt(graphPoints[1]*10));
+        // formData.append('graph_point_2', parseInt(graphPoints[2]*10));
+        // formData.append('graph_point_3', parseInt(graphPoints[3]*10));
+        // formData.append('graph_point_4', parseInt(graphPoints[4]*10));
+        // formData.append('graph_point_5', parseInt(graphPoints[5]*10));
+        // formData.append('graph_point_6', parseInt(graphPoints[6]*10));
+        // formData.append('graph_point_num', graphPoints.length);
+
+        // try {
+        //     const response = await fetch(`http://localhost:8000/app/graph/image/update/`, {
+        //         method: 'PUT',
+        //         // headers: {
+        //         // 'Content-Type': 'application/json',
+        //         // },
+        //         body: formData
+        //     });
+        //     if (!response.ok) {
+        //         throw new Error('グラフポイントの更新に失敗しました');
+        //     }
+        //     console.log('グラフポイントが正常に更新されました');
+        // } catch (error) {
+        //     console.error('グラフポイントの更新中にエラーが発生しました:', error);
+        // }
 
         // let body=JSON.stringify({'name':e.target.name.value,'email':e.target.email.value,'password':e.target.password.value})
         // console.log(body)
@@ -224,7 +254,7 @@ const MakeGraph=()=> {
                 const response = await fetch('http://localhost:8000/app/graph/create/', {
                     method: 'POST',
                     headers: {
-                    'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ 
                         user_id: userId,
@@ -252,11 +282,13 @@ const MakeGraph=()=> {
         }
         else {
             console.log('update')
+            console.log(userId)
+            console.log(graphPoints)
             try {
                 const response = await fetch(`http://localhost:8000/app/graph/update/`, {
                     method: 'PUT',
                     headers: {
-                    'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({ 
                         user_id: userId,
@@ -270,6 +302,9 @@ const MakeGraph=()=> {
                         graph_point_num: graphPoints.length,
                     }),
                 });
+                console.log('response:')
+                console.log(response)
+                console.log(response.body)
                 if (!response.ok) {
                     throw new Error('グラフポイントの更新に失敗しました');
                 }
@@ -283,6 +318,8 @@ const MakeGraph=()=> {
     useEffect(() => {
         if (user != undefined) {
             userId = user.user_id;
+            setUserId(user.user_id);
+            console.log('userId:'+userId)
             const fetchGraphPoints = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/app/graph/get/${userId}`);
