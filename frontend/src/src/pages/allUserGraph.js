@@ -18,17 +18,25 @@ const allUserGraph=()=>{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
-                // 'Authorization':'Bearer '+authTokens.access,
+                'Authorization':'Bearer '+authTokens.access,
                 // 'Access-Control-Allow-Origin': '*',
                 // 'Access-Control-Allow-Headers':'access-control-allow-origin'
             }
         })
         .then(async(res)=>{
+            console.log('res:',res)
             let data=await res.json()
-            // console.log('data:',data)
+            console.log('data:',data)
             // console.log(jwt_decode(data.access))
             if(res.status===200){
                 setAllUserGraph(data)
+                console.log('allUserGraph:',allUserGraph)
+
+                // let imageUrl='http://localhost:8000'+data[0].image
+                // console.log('imageUrl:',imageUrl)
+                // const imgElement = document.createElement('img');
+                // imgElement.src = imageUrl;
+                // document.body.appendChild(imgElement);
             }
             else if(res.statusText==='Unauthorized'){
                 logoutUser()
@@ -51,7 +59,10 @@ const allUserGraph=()=>{
                     <p>You are logged to all user graph page</p>
                     <ul>
                         {allUserGraph.map(graph=>(
-                            <li key={graph.id}>{graph.name}</li>
+                            <li key={graph.id}>
+                                {/* <img src='http://localhost:8000/media/graph_images/graph_22.png'></img> */}
+                                <img src={'http://localhost:8000'+graph.image}></img>
+                            </li>
                             // {graph.image}
                         ))}
                     </ul>
