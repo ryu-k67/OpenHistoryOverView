@@ -6,4 +6,4 @@ PyJWT
 # python-dateutil
 djoser
 django-cors-headers
-# Pillow
+Pillow

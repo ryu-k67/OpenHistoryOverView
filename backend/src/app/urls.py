@@ -19,5 +19,9 @@ urlpatterns=[
     path('graph/get/<int:user_id>',views.getGraph),
     path('graph/update/',views.updateGraph),
     path('graph/create/',views.createGraph),
+    path('graph/image/update/',views.updateGraphImage),
+    path('graph/image/create/',views.createGraphImage),
+    path('getAllUserGraph/',views.getAllUserGraph),
+    path('getToken/',views.get_csrf_token),
     path('',include(router.urls))
 ]
