@@ -17,6 +17,7 @@ class Note(models.Model):
 class Graph(models.Model):
     user_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,)
     # image=models.ImageField(upload_to="images/",verbose_name='画像')
+    # image = models.ImageField(upload_to='graph_images/', blank=True, null=True)
     # graph_point = models.IntegerField('',verbose_name='画像')
     # graph_point=ListCharField(models.IntegerField('グラフの点の値',default=50),size=10,max_length=10)
     graph_point_0=models.IntegerField('グラフの点の値',default=50)
@@ -34,3 +35,9 @@ class Graph(models.Model):
     updated_at=models.DateTimeField('更新日',auto_now=True)
     created_at=models.DateTimeField('作成日',auto_now_add=True)
     
+class GraphImage(models.Model):
+    user_id=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,)
+    # image=models.ImageField(upload_to="images/",verbose_name='画像')
+    image = models.ImageField(upload_to='graph_images/', blank=True, null=True)
+    updated_at=models.DateTimeField('更新日',auto_now=True)
+    created_at=models.DateTimeField('作成日',auto_now_add=True)

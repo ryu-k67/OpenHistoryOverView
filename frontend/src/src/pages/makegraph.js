@@ -183,20 +183,28 @@ const MakeGraph=()=> {
         console.log('save')
         // console.log(datas)
         console.log(graphPoints)
-        // imageSave()
+        imageSave()
         handleSavePoint()
     }
 
     const imageSave=async(e)=>{
         console.log('imageSave')
         let targetCanvas = document.getElementById('chartJSContainer')
-        let link = targetCanvas.toDataURL('image/png')
+        let dataUrl = targetCanvas.toDataURL('image/png')
         // const img = new Image();
         // img.src = dataUrl;
+        // img.title = 'graph_'+userId;
+        // let img = targetCanvas.toBlob();
+        let img = await (await fetch(dataUrl)).blob();
 
-        // const formData = new FormData();
-        // formData.append('image', img);  // imageFileはファイルインプットから選択された画像ファイル
-        // formData.append('user_id', userId);  // 他のデータも追加可能
+        const response = await fetch('http://localhost:8000/app/getToken/');
+        const data = await response.json();
+        let token =  data.csrf_token;
+
+        const formData = new FormData();
+        formData.append('image', img, 'graph_'+userId+'.png');  // imageFileはファイルインプットから選択された画像ファイル
+        formData.append('user_id', userId);  // 他のデータも追加可能
+        formData.append('csrfmiddlewaretoken', token);
         // formData.append('graph_point_0', parseInt(graphPoints[0]*10));
         // formData.append('graph_point_1', parseInt(graphPoints[1]*10));
         // formData.append('graph_point_2', parseInt(graphPoints[2]*10));
@@ -205,21 +213,52 @@ const MakeGraph=()=> {
         // formData.append('graph_point_5', parseInt(graphPoints[5]*10));
         // formData.append('graph_point_6', parseInt(graphPoints[6]*10));
         // formData.append('graph_point_num', graphPoints.length);
-
-        // try {
-        //     const response = await fetch(`http://localhost:8000/app/graph/image/update/`, {
-        //         method: 'PUT',
-        //         // headers: {
-        //         // 'Content-Type': 'application/json',
-        //         // },
-        //         body: formData
-        //     });
-        //     if (!response.ok) {
-        //         throw new Error('グラフポイントの更新に失敗しました');
+        console.log(formData)
+        console.log(dataUrl)
+        console.log(img)
+        console.log(token)
+        console.log(formData.get('image'))
+        console.log(formData.get('user_id'))
+        console.log(formData.get('user_id'))
+        // if (graphInit) {
+        console.log('create')
+        try {
+            const response = await fetch(`http://localhost:8000/app/graph/image/create/`, {
+                method: 'POST',
+                // headers: {
+                //     // 'Content-Type': 'application/json',
+                //     'Content-Type': 'multipart/form-data',
+                // },
+                body: formData
+            });
+            console.log('response:')
+            console.log(response)
+            if (!response.ok) {
+                throw new Error('グラフポイントの更新に失敗しました');
+            }
+            console.log('グラフポイントが正常に更新されました');
+        } catch (error) {
+            console.error('グラフポイントの更新中にエラーが発生しました:', error);
+        }
+        // }
+        // else {
+        //     console.log('update')
+        //     try {
+        //         const response = await fetch(`http://localhost:8000/app/graph/image/update/`, {
+        //             method: 'PUT',
+        //             // method: 'POST',
+        //             // headers: {
+        //             // 'Content-Type': 'application/json',
+        //             // },
+        //             body: formData
+        //         });
+        //         if (!response.ok) {
+        //             throw new Error('グラフポイントの更新に失敗しました');
+        //         }
+        //         console.log('グラフポイントが正常に更新されました');
+        //     } catch (error) {
+        //         console.error('グラフポイントの更新中にエラーが発生しました:', error);
         //     }
-        //     console.log('グラフポイントが正常に更新されました');
-        // } catch (error) {
-        //     console.error('グラフポイントの更新中にエラーが発生しました:', error);
         // }
 
         // let body=JSON.stringify({'name':e.target.name.value,'email':e.target.email.value,'password':e.target.password.value})

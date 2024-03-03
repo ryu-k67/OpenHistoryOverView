@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Note,Graph
+from .models import Note,Graph,GraphImage
 from django.contrib.admin import ModelAdmin
 
 admin.site.register(Note)
@@ -13,3 +13,4 @@ admin.site.register(Note)
 
 # admin.site.register(Graph,GraphCustom)
 admin.site.register(Graph)
+admin.site.register(GraphImage)
