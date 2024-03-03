@@ -31,12 +31,12 @@ function Navigation(){
                                 
                                 {/* ログイン後 */}
                                 {user && 
-                                    <Link href='/notelist' className='button-nav mr-4'>
+                                    <Link href='/allUserGraph' className='button-nav mr-4'>
                                         一覧
                                     </Link>
                                 }
                                 {user && 
-                                    <Link href='/makegraph' className='button-nav mr-4'>
+                                    <Link href='/makeGraph' className='button-nav mr-4'>
                                         グラフ編集
                                     </Link>
                                 }
