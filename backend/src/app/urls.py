@@ -21,7 +21,7 @@ urlpatterns=[
     path('graph/create/',views.createGraph),
     path('graph/image/update/',views.updateGraphImage),
     path('graph/image/create/',views.createGraphImage),
-    path('getAllUserGraph/',views.getAllUserGraph),
+    path('getAllUserGraph/',views.GraphImageListView.as_view()),
     path('getToken/',views.get_csrf_token),
     path('',include(router.urls))
 ]

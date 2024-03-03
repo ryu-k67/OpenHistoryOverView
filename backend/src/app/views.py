@@ -17,6 +17,7 @@ from accounts.models import UserAccount
 from accounts.serializers import UserSerializer
 from .serializers import GraphSerializer, GraphImageSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework import status
 
 @api_view(['GET'])
 def getNotes(request):
@@ -136,9 +137,17 @@ def updateGraphImage(request):
         return JsonResponse(graph_image_serializer.errors, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=404)
 
-def getAllUserGraph(ListAPIView):
-    queryset = Graph.objects.all()
-    serializer_class = GraphSerializer
+# @csrf_exempt
+class GraphImageListView(ListAPIView):
+    # queryset = GraphImage.objects.all()
+    # serializer_class = GraphImageSerializer
+
+    def get(self,request):
+        queryset = GraphImage.objects.all()
+        print(queryset)
+        serializer_class = GraphImageSerializer(queryset, many=True)
+        print(serializer_class.data)
+        return Response(serializer_class.data, status=status.HTTP_200_OK)
     
 
 # class RegisterView(APIView):
