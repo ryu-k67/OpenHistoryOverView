@@ -5,16 +5,26 @@ import React,{useState,useEffect,useContext} from "react"
 const allUserGraph=()=>{
     let [allUserGraph,setAllUserGraph] =useState([])
     let {authTokens,logoutUser}=useContext(AuthContext)
+    let [currentPage, setCurrentPage] = useState(1);
+    let [totalPages, setTotalPages] = useState(3);
 
     useEffect(()=>{
         if(authTokens){
             getAllUserGraph()
         }
-    },[authTokens])
+    },[authTokens,currentPage])
+
+    const handlePreviousPage = () => {
+        setCurrentPage((prevPage) => prevPage - 1);
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prevPage) => prevPage + 1);
+    };
 
     let getAllUserGraph=async()=>{
         // console.log(authTokens.access)
-        let response=await fetch('http://localhost:8000/app/getAllUserGraph/',{
+        let response=await fetch(`http://localhost:8000/app/getAllUserGraph/?page=${currentPage}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -55,17 +65,37 @@ const allUserGraph=()=>{
         //     {!user?
         //         <Link href="/login" />
         //         :
+                // <div>
+                //     <p>You are logged to all user graph page</p>
+                //     <ul>
+                //         {allUserGraph.map(graph=>(
+                //             <li key={graph.id}>
+                //                 {/* <img src='http://localhost:8000/media/graph_images/graph_22.png'></img> */}
+                //                 <img src={'http://localhost:8000'+graph.image}></img>
+                //             </li>
+                //             // {graph.image}
+                //         ))}
+                //     </ul>
+                // </div>
+                
                 <div>
-                    <p>You are logged to all user graph page</p>
-                    <ul>
-                        {allUserGraph.map(graph=>(
-                            <li key={graph.id}>
-                                {/* <img src='http://localhost:8000/media/graph_images/graph_22.png'></img> */}
-                                <img src={'http://localhost:8000'+graph.image}></img>
-                            </li>
-                            // {graph.image}
-                        ))}
-                    </ul>
+                    {allUserGraph.map((graph) => (
+                        <div key={graph.id}>
+                        <p>{graph.user_name}</p>
+                        <img src={'http://localhost:8000'+graph.image} alt="Graph" />
+                        </div>
+                    ))}
+
+                    {/* ページネーションの表示 */}
+                    <div className="pagination">
+                        <span className="step-links">
+                            {currentPage > 1 && <button onClick={handlePreviousPage}>previous</button>}
+                            <span className="current">
+                                Page {currentPage} of {totalPages}.
+                            </span>
+                            {currentPage < totalPages && <button onClick={handleNextPage}>next</button>}
+                        </span>
+                    </div>
                 </div>
         //     }
         // </>
