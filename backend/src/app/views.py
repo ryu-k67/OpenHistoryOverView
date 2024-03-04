@@ -155,7 +155,7 @@ class GraphImageListView(ListAPIView):
         print(graphs_with_userName)
 
         # ページネーションの設定
-        paginator = Paginator(graphs_with_userName, 2)  # 1ページに40件表示
+        paginator = Paginator(graphs_with_userName, 3)  # 1ページに40件表示
         # ページ番号を取得
         page_number = request.GET.get('page')
         # ページのグラフ情報を取得

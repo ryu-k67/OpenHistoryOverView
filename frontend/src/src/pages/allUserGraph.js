@@ -79,12 +79,15 @@ const allUserGraph=()=>{
                 // </div>
                 
                 <div>
-                    {allUserGraph.map((graph) => (
-                        <div key={graph.id}>
-                        <p>{graph.user_name}</p>
-                        <img src={'http://localhost:8000'+graph.image} alt="Graph" />
-                        </div>
-                    ))}
+                    <div className="card-container">
+                        {/* カードの表示 */}
+                        {allUserGraph.map((graph) => (
+                            <div key={graph.id} className="card">
+                                <p>{graph.user_name}</p>
+                                <img src={'http://localhost:8000'+graph.image} alt="Graph" />
+                            </div>
+                        ))}
+                    </div>
 
                     {/* ページネーションの表示 */}
                     <div className="pagination">
