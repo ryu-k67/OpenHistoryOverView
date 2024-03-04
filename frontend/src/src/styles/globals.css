@@ -57,3 +57,21 @@ body {
   max-width: 100%;
   height: auto;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc; /* 無効なときの背景色を灰色に設定 */
+  color: #666; /* 無効なときの文字色を灰色に設定 */
+  cursor: not-allowed; /* マウスカーソルを変更してクリックを無効にする */
+}
+
+.pagination button:enabled {
+  background-color: #3498db; /* 有効なときの背景色を青色に設定 */
+  color: #fff; /* 有効なときの文字色を白色に設定 */
+  cursor: pointer; /* マウスカーソルを標準に戻す */
+}

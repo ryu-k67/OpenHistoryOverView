@@ -5,7 +5,7 @@ import React,{useState,useEffect,useContext} from "react"
 const allUserGraph=()=>{
     let [allUserGraph,setAllUserGraph] =useState([])
     let {authTokens,logoutUser}=useContext(AuthContext)
-    const page_per_graph_num = 3;
+    const page_per_graph_num = 1;
     let [currentPage, setCurrentPage] = useState(1);
     let [totalPages, setTotalPages] = useState(1);
 
@@ -94,11 +94,13 @@ const allUserGraph=()=>{
                     {/* ページネーションの表示 */}
                     <div className="pagination">
                         <span className="step-links">
-                            {currentPage > 1 && <button className="button-yellow" onClick={handlePreviousPage}>previous</button>}
-                            <span className="current">
+                            {/* {currentPage > 1 && <button className="button-yellow" onClick={handlePreviousPage} disabled={currentPage === 1}>previous</button>} */}
+                            <button onClick={handlePreviousPage} disabled={currentPage === 1}>previous</button>
+                            <span className="current" >
                                 Page {currentPage} of {totalPages}.
                             </span>
-                            {currentPage < totalPages && <button className="button-yellow" onClick={handleNextPage}>next</button>}
+                            {/* {currentPage < totalPages && <button className="button-yellow" onClick={handleNextPage} disabled={currentPage === totalPages}>next</button>} */}
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>next</button>
                         </span>
                     </div>
                 </div>
