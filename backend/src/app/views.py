@@ -143,11 +143,31 @@ class GraphImageListView(ListAPIView):
     # serializer_class = GraphImageSerializer
 
     def get(self,request):
-        queryset = GraphImage.objects.all()
-        print(queryset)
-        serializer_class = GraphImageSerializer(queryset, many=True)
-        print(serializer_class.data)
-        return Response(serializer_class.data, status=status.HTTP_200_OK)
+        # queryset = GraphImage.objects.all()
+        # print(queryset)
+        # serializer_class = GraphImageSerializer(queryset, many=True)
+        # print(serializer_class.data)
+        # return Response(serializer_class.data, status=status.HTTP_200_OK)
+    
+        # PostモデルとAuthorモデルを結合して全件取得
+        graphs_with_userName = GraphImage.objects.select_related('user_id').all()
+        print(graphs_with_userName)
+        # 必要な情報を辞書にまとめてフロントエンドに渡す
+        data = []
+        for graph in graphs_with_userName:
+            # print(graph)
+            # print(graph.user_id)
+            # print(graph.image) # 画像本体
+            data.append({
+                'id': graph.id,
+                'user_id': graph.user_id.id,
+                'user_name': graph.user_id.name,
+                'image': graph.image.url,
+                'created_at': graph.created_at,
+            })
+        print(data)
+        # return render(request, 'your_template.html', {'data': data})
+        return Response(data, status=status.HTTP_200_OK)
     
 
 # class RegisterView(APIView):
