@@ -1,4 +1,5 @@
 import json
+import math
 from django.shortcuts import render
 
 # Create your views here.
@@ -155,7 +156,8 @@ class GraphImageListView(ListAPIView):
         print(graphs_with_userName)
 
         # ページネーションの設定
-        paginator = Paginator(graphs_with_userName, 3)  # 1ページに40件表示
+        page_per_graph_num = request.GET.get('page_per_graph_num')
+        paginator = Paginator(graphs_with_userName, page_per_graph_num)  # 1ページに40件表示
         # ページ番号を取得
         page_number = request.GET.get('page')
         # ページのグラフ情報を取得
@@ -164,18 +166,21 @@ class GraphImageListView(ListAPIView):
 
         # 必要な情報を辞書にまとめてフロントエンドに渡す
         data = []
+        data.append({'total_pages': math.ceil(graphs_with_userName.count() / int(page_per_graph_num))})
+        graph_data = []
         # for graph in graphs_with_userName:
         for graph in page_obj:
             # print(graph)
             # print(graph.user_id)
             # print(graph.image) # 画像本体
-            data.append({
+            graph_data.append({
                 'id': graph.id,
                 'user_id': graph.user_id.id,
                 'user_name': graph.user_id.name,
                 'image': graph.image.url,
                 'created_at': graph.created_at,
             })
+        data.append(graph_data)
         print(data)
         # return render(request, 'your_template.html', {'data': data})
         return Response(data, status=status.HTTP_200_OK)

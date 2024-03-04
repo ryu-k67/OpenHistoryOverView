@@ -5,8 +5,9 @@ import React,{useState,useEffect,useContext} from "react"
 const allUserGraph=()=>{
     let [allUserGraph,setAllUserGraph] =useState([])
     let {authTokens,logoutUser}=useContext(AuthContext)
+    const page_per_graph_num = 3;
     let [currentPage, setCurrentPage] = useState(1);
-    let [totalPages, setTotalPages] = useState(3);
+    let [totalPages, setTotalPages] = useState(1);
 
     useEffect(()=>{
         if(authTokens){
@@ -24,7 +25,7 @@ const allUserGraph=()=>{
 
     let getAllUserGraph=async()=>{
         // console.log(authTokens.access)
-        let response=await fetch(`http://localhost:8000/app/getAllUserGraph/?page=${currentPage}`,{
+        let response=await fetch(`http://localhost:8000/app/getAllUserGraph/?page=${currentPage}&page_per_graph_num=${page_per_graph_num}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -39,7 +40,8 @@ const allUserGraph=()=>{
             console.log('data:',data)
             // console.log(jwt_decode(data.access))
             if(res.status===200){
-                setAllUserGraph(data)
+                setTotalPages(data[0].total_pages)
+                setAllUserGraph(data[1])
                 console.log('allUserGraph:',allUserGraph)
 
                 // let imageUrl='http://localhost:8000'+data[0].image
