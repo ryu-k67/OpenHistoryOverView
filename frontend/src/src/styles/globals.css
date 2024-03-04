@@ -64,6 +64,14 @@ body {
   margin-top: 20px;
 }
 
+.pagination button {
+  padding: 10px 20px; /* ボタンの内側の余白を設定 */
+  font-size: 16px; /* ボタンの文字サイズを設定 */
+  border: none; /* ボーダーを削除 */
+  border-radius: 5px; /* ボーダーの角を丸くする */
+  margin: 5px; /* ボタン間の余白を設定 */
+}
+
 .pagination button:disabled {
   background-color: #ccc; /* 無効なときの背景色を灰色に設定 */
   color: #666; /* 無効なときの文字色を灰色に設定 */
