@@ -18,6 +18,7 @@ from accounts.serializers import UserSerializer
 from .serializers import GraphSerializer, GraphImageSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework import status
+from django.core.paginator import Paginator
 
 @api_view(['GET'])
 def getNotes(request):
@@ -152,9 +153,19 @@ class GraphImageListView(ListAPIView):
         # PostモデルとAuthorモデルを結合して全件取得
         graphs_with_userName = GraphImage.objects.select_related('user_id').all()
         print(graphs_with_userName)
+
+        # ページネーションの設定
+        paginator = Paginator(graphs_with_userName, 2)  # 1ページに40件表示
+        # ページ番号を取得
+        page_number = request.GET.get('page')
+        # ページのグラフ情報を取得
+        page_obj = paginator.get_page(page_number)
+        print(page_obj)
+
         # 必要な情報を辞書にまとめてフロントエンドに渡す
         data = []
-        for graph in graphs_with_userName:
+        # for graph in graphs_with_userName:
+        for graph in page_obj:
             # print(graph)
             # print(graph.user_id)
             # print(graph.image) # 画像本体
