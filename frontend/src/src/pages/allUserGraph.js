@@ -89,11 +89,11 @@ const allUserGraph=()=>{
                     {/* ページネーションの表示 */}
                     <div className="pagination">
                         <span className="step-links">
-                            {currentPage > 1 && <button onClick={handlePreviousPage}>previous</button>}
+                            {currentPage > 1 && <button className="button-yellow" onClick={handlePreviousPage}>previous</button>}
                             <span className="current">
                                 Page {currentPage} of {totalPages}.
                             </span>
-                            {currentPage < totalPages && <button onClick={handleNextPage}>next</button>}
+                            {currentPage < totalPages && <button className="button-yellow" onClick={handleNextPage}>next</button>}
                         </span>
                     </div>
                 </div>
