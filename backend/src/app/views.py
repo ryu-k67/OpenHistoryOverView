@@ -1,4 +1,5 @@
 import json
+import math
 from django.shortcuts import render
 
 # Create your views here.
@@ -18,6 +19,7 @@ from accounts.serializers import UserSerializer
 from .serializers import GraphSerializer, GraphImageSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework import status
+from django.core.paginator import Paginator
 
 @api_view(['GET'])
 def getNotes(request):
@@ -143,11 +145,45 @@ class GraphImageListView(ListAPIView):
     # serializer_class = GraphImageSerializer
 
     def get(self,request):
-        queryset = GraphImage.objects.all()
-        print(queryset)
-        serializer_class = GraphImageSerializer(queryset, many=True)
-        print(serializer_class.data)
-        return Response(serializer_class.data, status=status.HTTP_200_OK)
+        # queryset = GraphImage.objects.all()
+        # print(queryset)
+        # serializer_class = GraphImageSerializer(queryset, many=True)
+        # print(serializer_class.data)
+        # return Response(serializer_class.data, status=status.HTTP_200_OK)
+    
+        # PostモデルとAuthorモデルを結合して全件取得
+        graphs_with_userName = GraphImage.objects.select_related('user_id').all()
+        print(graphs_with_userName)
+
+        # ページネーションの設定
+        page_per_graph_num = request.GET.get('page_per_graph_num')
+        paginator = Paginator(graphs_with_userName, page_per_graph_num)  # 1ページに40件表示
+        # ページ番号を取得
+        page_number = request.GET.get('page')
+        # ページのグラフ情報を取得
+        page_obj = paginator.get_page(page_number)
+        print(page_obj)
+
+        # 必要な情報を辞書にまとめてフロントエンドに渡す
+        data = []
+        data.append({'total_pages': math.ceil(graphs_with_userName.count() / int(page_per_graph_num))})
+        graph_data = []
+        # for graph in graphs_with_userName:
+        for graph in page_obj:
+            # print(graph)
+            # print(graph.user_id)
+            # print(graph.image) # 画像本体
+            graph_data.append({
+                'id': graph.id,
+                'user_id': graph.user_id.id,
+                'user_name': graph.user_id.name,
+                'image': graph.image.url,
+                'created_at': graph.created_at,
+            })
+        data.append(graph_data)
+        print(data)
+        # return render(request, 'your_template.html', {'data': data})
+        return Response(data, status=status.HTTP_200_OK)
     
 
 # class RegisterView(APIView):

@@ -37,3 +37,49 @@ body {
 .button-nav{
   @apply inline-block bg-white py-2 px-4 rounded font-medium text-gray-500 hover:bg-gray-50;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  /* width: calc(25% - 20px); カードの横幅を計算して余白を設定 */
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  text-align: left;
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 20px; /* ボタンの内側の余白を設定 */
+  font-size: 16px; /* ボタンの文字サイズを設定 */
+  border: none; /* ボーダーを削除 */
+  border-radius: 5px; /* ボーダーの角を丸くする */
+  margin: 5px; /* ボタン間の余白を設定 */
+}
+
+.pagination button:disabled {
+  background-color: #ccc; /* 無効なときの背景色を灰色に設定 */
+  color: #666; /* 無効なときの文字色を灰色に設定 */
+  cursor: not-allowed; /* マウスカーソルを変更してクリックを無効にする */
+}
+
+.pagination button:enabled {
+  background-color: #3498db; /* 有効なときの背景色を青色に設定 */
+  color: #fff; /* 有効なときの文字色を白色に設定 */
+  cursor: pointer; /* マウスカーソルを標準に戻す */
+}
