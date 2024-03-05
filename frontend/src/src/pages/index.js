@@ -117,15 +117,31 @@
 //   )
 // }
 
-
+import Image from 'next/image';
 
 function Index(){
   return(
-    <>
-      <div className="text-center text-2xl">
-        ここがホーム
+    // <>
+    //   <div className="text-center text-2xl">
+    //     ここがホーム
+    //   </div>
+    // </>
+    <div className="title-container">
+      <div className="title-content">
+        <h1>Title</h1>
       </div>
-    </>
+      <div className="title-image">
+        <Image
+          src="/images/title_image.png"
+          alt="Title Image"
+          width={1000}
+          height={1000}
+        />
+      </div>
+      <div className="title-content">
+        <p>簡単な説明文</p>
+      </div>
+    </div>
   )
 }
 
