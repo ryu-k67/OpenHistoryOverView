@@ -127,9 +127,11 @@ function Index(){
     //   </div>
     // </>
     <div className="title-container">
-      <div className="title-content">
-        <h1>Title</h1>
+      <div className="title-title">
+        <p>HistoryOverView</p>
+        <p>~自分年表を作成しよう~</p>
       </div>
+
       <div className="title-image">
         <Image
           src="/images/title_image.png"
@@ -138,8 +140,13 @@ function Index(){
           height={1000}
         />
       </div>
+
       <div className="title-content">
-        <p>簡単な説明文</p>
+        <ol>
+          <li>1. アカウントを作成しよう</li>
+          <li>2. 自分年表を作成しよう</li>
+          <li>3. 他ユーザーの年表を見てみよう</li>
+        </ol>
       </div>
     </div>
   )
