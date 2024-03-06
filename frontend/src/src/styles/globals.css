@@ -55,6 +55,11 @@ body {
   text-align: center;
 }
 
+.title-subtitle {
+  font-size: 1.5rem; /* 任意のサイズを指定 */
+  text-align: center;
+}
+
 .title-image {
   width: 80%;
   /* height: 100%; */
