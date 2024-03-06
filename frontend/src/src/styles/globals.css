@@ -38,6 +38,45 @@ body {
   @apply inline-block bg-white py-2 px-4 rounded font-medium text-gray-500 hover:bg-gray-50;
 }
 
+
+.title-container {
+  /* position: flex; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; 画面の横幅の80% */
+  /* height: 0; */
+  /* padding-bottom: 60%; 画像のアスペクト比を維持するためのパディング */
+}
+
+.title-title {
+  font-size: 3rem; /* 任意のサイズを指定 */
+  text-align: center;
+}
+
+.title-image {
+  width: 80%;
+  /* height: 100%; */
+  max-width: 500px;
+  /* object-fit: cover; */
+  border: 1px solid black; /* 黒い枠線 */
+  /* align-items: center;
+  text-align: center;
+  max-width: auto; */
+}
+
+.title-content {
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  text-align: left;
+  /* color: white; */
+  font-size: 2rem;
+}
+
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -57,6 +96,7 @@ body {
   max-width: 100%;
   height: auto;
 }
+
 
 .pagination {
   display: flex;

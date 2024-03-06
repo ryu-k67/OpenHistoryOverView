@@ -117,15 +117,38 @@
 //   )
 // }
 
-
+import Image from 'next/image';
 
 function Index(){
   return(
-    <>
-      <div className="text-center text-2xl">
-        ここがホーム
+    // <>
+    //   <div className="text-center text-2xl">
+    //     ここがホーム
+    //   </div>
+    // </>
+    <div className="title-container">
+      <div className="title-title">
+        <p>HistoryOverView</p>
+        <p>~自分年表を作成しよう~</p>
       </div>
-    </>
+
+      <div className="title-image">
+        <Image
+          src="/images/title_image.png"
+          alt="Title Image"
+          width={1000}
+          height={1000}
+        />
+      </div>
+
+      <div className="title-content">
+        <ol>
+          <li>1. アカウントを作成しよう</li>
+          <li>2. 自分年表を作成しよう</li>
+          <li>3. 他ユーザーの年表を見てみよう</li>
+        </ol>
+      </div>
+    </div>
   )
 }
 
