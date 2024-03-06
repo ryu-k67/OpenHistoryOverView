@@ -128,8 +128,10 @@ function Index(){
     // </>
     <div className="title-container">
       <div className="title-title">
-        <p>HistoryOverView</p>
-        <p>~自分年表を作成しよう~</p>
+        HistoryOverView
+      </div>
+      <div className="title-subtitle">
+        ~自分年表を作成しよう~
       </div>
 
       <div className="title-image">
@@ -138,6 +140,7 @@ function Index(){
           alt="Title Image"
           width={1000}
           height={1000}
+          priority={true}
         />
       </div>
 
