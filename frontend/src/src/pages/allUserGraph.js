@@ -5,9 +5,11 @@ import React,{useState,useEffect,useContext} from "react"
 const allUserGraph=()=>{
     let [allUserGraph,setAllUserGraph] =useState([])
     let {authTokens,logoutUser}=useContext(AuthContext)
-    const page_per_graph_num = 1;
+    const page_per_graph_num = 3;
     let [currentPage, setCurrentPage] = useState(1);
     let [totalPages, setTotalPages] = useState(1);
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKENDS_URL // http://localhost:8000/
 
     useEffect(()=>{
         if(authTokens){
@@ -25,7 +27,7 @@ const allUserGraph=()=>{
 
     let getAllUserGraph=async()=>{
         // console.log(authTokens.access)
-        let response=await fetch(`http://localhost:8000/app/getAllUserGraph/?page=${currentPage}&page_per_graph_num=${page_per_graph_num}`,{
+        let response=await fetch(`${backendUrl}app/getAllUserGraph/?page=${currentPage}&page_per_graph_num=${page_per_graph_num}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',
@@ -86,7 +88,7 @@ const allUserGraph=()=>{
                         {allUserGraph.map((graph) => (
                             <div key={graph.id} className="card">
                                 <p>{graph.user_name}</p>
-                                <img src={'http://localhost:8000'+graph.image} alt="Graph" />
+                                <img src={backendUrl+graph.image} alt="Graph" />
                             </div>
                         ))}
                     </div>
