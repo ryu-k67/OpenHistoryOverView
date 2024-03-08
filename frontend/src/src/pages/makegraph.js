@@ -101,12 +101,14 @@ const MakeGraph=()=> {
 
     const [graphPoints, setGraphPoints] = useState([]);
     const [graphInit, setGraphInit] = useState(false);
-    const {user}=useContext(AuthContext);
+    const {user,authTokens}=useContext(AuthContext);
     console.log(user)
     // console.log(user.user_id)
     let [userId,setUserId]=useState();
     // const userId=1
     // console.log(userId)
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKENDS_URL // http://localhost:8000/
 
     let options = {
         type: 'line',
@@ -197,7 +199,7 @@ const MakeGraph=()=> {
         // let img = targetCanvas.toBlob();
         let img = await (await fetch(dataUrl)).blob();
 
-        const response = await fetch('http://localhost:8000/app/getToken/');
+        const response = await fetch(`${backendUrl}app/getToken/`);
         const data = await response.json();
         let token =  data.csrf_token;
 
@@ -223,12 +225,13 @@ const MakeGraph=()=> {
         // if (graphInit) {
         console.log('create')
         try {
-            const response = await fetch(`http://localhost:8000/app/graph/image/create/`, {
+            const response = await fetch(`${backendUrl}app/graph/image/create/`, {
                 method: 'POST',
-                // headers: {
+                headers: {
+                    'Authorization':'Bearer '+authTokens.access,
                 //     // 'Content-Type': 'application/json',
                 //     'Content-Type': 'multipart/form-data',
-                // },
+                },
                 body: formData
             });
             console.log('response:')
@@ -290,10 +293,11 @@ const MakeGraph=()=> {
         if (graphInit) {
             console.log('create')
             try {
-                const response = await fetch('http://localhost:8000/app/graph/create/', {
+                const response = await fetch(`${backendUrl}app/graph/create/`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization':'Bearer '+authTokens.access,
                     },
                     body: JSON.stringify({ 
                         user_id: userId,
@@ -324,10 +328,11 @@ const MakeGraph=()=> {
             console.log(userId)
             console.log(graphPoints)
             try {
-                const response = await fetch(`http://localhost:8000/app/graph/update/`, {
+                const response = await fetch(`${backendUrl}app/graph/update/`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization':'Bearer '+authTokens.access,
                     },
                     body: JSON.stringify({ 
                         user_id: userId,
@@ -361,7 +366,7 @@ const MakeGraph=()=> {
             console.log('userId:'+userId)
             const fetchGraphPoints = async () => {
             try {
-                const response = await fetch(`http://localhost:8000/app/graph/get/${userId}`);
+                const response = await fetch(`${backendUrl}app/graph/get/${userId}`);
                 if (!response.ok) {
                 throw new Error('グラフポイントの取得に失敗しました');
                 }
