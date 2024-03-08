@@ -16,6 +16,7 @@ export const AuthProvider=({children})=>{
     let curr_path='/'
 
     let router=useRouter()
+    const backendUrl = process.env.NEXT_PUBLIC_BACKENDS_URL // http://localhost:8000/
 
 
     useEffect(()=>{
@@ -33,7 +34,7 @@ export const AuthProvider=({children})=>{
         let body=JSON.stringify({'name':e.target.name.value,'email':e.target.email.value,'password':e.target.password.value})
         console.log(body)
         // let response=await fetch('http://127.20.0.4:8000/api/register/',{
-        let response=await fetch('http://localhost:8000/api/register/',{
+        let response=await fetch(`${backendUrl}api/register/`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -70,7 +71,7 @@ export const AuthProvider=({children})=>{
         e.preventDefault()
         console.log('From submitted')
         // let response=await fetch('http://127.20.0.4:8000/api/token/',{
-        let response=await fetch('http://localhost:8000/api/token/',{
+        let response=await fetch(`${backendUrl}api/token/`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
@@ -113,7 +114,7 @@ export const AuthProvider=({children})=>{
 
     let updateToken = async()=>{
         console.log('Update token')
-        let response=await fetch('http://localhost:8000/api/token/refresh/',{
+        let response=await fetch(`${backendUrl}api/token/refresh/`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',

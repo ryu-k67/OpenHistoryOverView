@@ -21,6 +21,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework import status
 from django.core.paginator import Paginator
 
+
 @api_view(['GET'])
 def getNotes(request):
     user=request.user
@@ -33,7 +34,11 @@ def getNotes(request):
 #     queryset = Graph.objects.all()
 #     serializer_class = GraphSerializer
 
-@csrf_exempt 
+
+# @csrf_exempt 
+@api_view(['POST'])
+# @authentication_classes([])  # 認証を無効にする
+# @permission_classes([])      # パーミッションを無効にする
 def createGraph(request):
     print(request)
     if request.method == 'POST':
@@ -52,6 +57,7 @@ def createGraph(request):
         return JsonResponse(graph_serializer.errors, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
     
+
 def getGraph(request, user_id):
     try:
         # user = UserAccount.objects.get(id=user_id)
@@ -63,7 +69,11 @@ def getGraph(request, user_id):
     except UserAccount.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
     
-@csrf_exempt
+
+# @csrf_exempt
+@api_view(['PUT'])
+# @authentication_classes([])  # 認証を無効にする
+# @permission_classes([])      # パーミッションを無効にする
 def updateGraph(request):
     if request.method == 'PUT':
         data = JSONParser().parse(request)
@@ -85,8 +95,10 @@ def get_csrf_token(request):
     return JsonResponse({'csrf_token': csrf_token})
 
 
-@csrf_exempt 
-# @api_view(['POST'])
+from django.core.files.storage import default_storage
+
+# @csrf_exempt 
+@api_view(['POST'])
 # @authentication_classes([])  # 認証を無効にする
 # @permission_classes([])      # パーミッションを無効にする
 def createGraphImage(request):
@@ -96,10 +108,20 @@ def createGraphImage(request):
         user_id = request.POST.get('user_id')
         image_file = request.FILES.get('image')
         # graph_image = GraphImage.objects.get(user_id=user_id)
-        GraphImage.objects.filter(user_id=user_id).delete()
-        data = {'user_id': user_id,
-                'image': image_file,
-                }
+        # GraphImage.objects.filter(user_id=user_id).delete()
+
+        try:
+            graph_instance = GraphImage.objects.get(user_id=user_id)
+            if graph_instance.image:
+                default_storage.delete(graph_instance.image.path)
+            graph_instance.delete()
+        except GraphImage.DoesNotExist:
+            pass
+
+        data = {
+            'user_id': user_id,
+            'image': image_file,
+        }
         print('user_id:'+str(user_id))
         print('image:'+str(image_file))
         graph_image_serializer = GraphImageSerializer(data=data)
@@ -111,7 +133,10 @@ def createGraphImage(request):
         return JsonResponse(graph_image_serializer.errors, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
-@csrf_exempt
+# @csrf_exempt
+@api_view(['PUT'])
+# @authentication_classes([])  # 認証を無効にする
+# @permission_classes([])      # パーミッションを無効にする
 def updateGraphImage(request):
     if request.method == 'PUT':
     # if request.method == 'POST':
