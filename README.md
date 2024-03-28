@@ -70,5 +70,5 @@
 - コンテナに割り当てられたIPアドレスを確認する(Windows)  
 ```docker inspect コンテナID | findstr  IPAddress```
 
-- リポジトリclone後
+- リポジトリclone後  
 ```docker-compose run -w /next/src/node_modules --rm next yarn install```
