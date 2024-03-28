@@ -134,3 +134,20 @@ class RegisterView(APIView):
                 {'error': 'ユーザー登録時に問題発生'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+
+class EditAccountView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def put(self, request):
+        user = request.user
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

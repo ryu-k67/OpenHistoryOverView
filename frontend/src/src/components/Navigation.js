@@ -41,6 +41,11 @@ function Navigation(){
                                     </Link>
                                 }
                                 {user && 
+                                    <Link href='/editAccount' className='button-nav mr-4'>
+                                        アカウント情報編集
+                                    </Link>
+                                }
+                                {user && 
                                     <p onClick={logoutUser} className='button-nav mr-4'>
                                         ログアウト
                                     </p>
