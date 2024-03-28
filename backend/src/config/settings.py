@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-from .local_settings import *
+from .local_settings import *  # django secret_key & database settings をローカル環境(local_settings.py)に設定
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
